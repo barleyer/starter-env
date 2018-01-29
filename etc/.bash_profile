@@ -5,9 +5,17 @@
 #                                                                              #
 # ============================================================================ #
 
-# Your Bash Profile is a set of configurations for your bash terminal. This
-# file runs before every new session (e.g. if you open a new tab or window in
-# your terminal).
+# Bash stands for "Bourne-Again SHell". A shell is a way to talk more directly
+# to the operating system, in this case via a "command-line" interface. A
+# command-line interface is like a text-based Alexa: you issue a command from
+# the set of available commands and get back a response. Whereas you might say
+# `Alexa, Simon Says "Hello, World"` and hear back "Hello, World", in Bash
+# you would type `echo "Hello, World"` and see "Hello, World" printed out.
+#
+# Your Bash Profile is a set of configurations for your Bash terminal. This
+# file runs before every new session. A session in your terminal is similar to
+# a "session" in your web browser where you can sign in to a website, click a
+# link to another site, and when you go back not need to re-authenticate.
 #
 # To reload, such as after you update this file, run `source ~/.bash_profile`
 # in your terminal:
@@ -27,12 +35,16 @@
 #
 # You can make a variable available by adding it to your enviroment by exporting
 # it. When you export a variable in a file by adding the line
-# `export VARIABLE_NAME=Value`, it will be  available when you load that file
+# `export VARIABLE_NAME=Value`, it will be available when you load that file
 # into your terminal with `source <filename>`.
 #
 # To see your environment and the values of any variables, run `env`:
 #   $ env
-#
+
+# *** Note ***
+# Bash loads this file before every session, so any variables you export here
+# will be available in all terminal sessions.
+
 # These variables and their values are available to any program or command that
 # runs in your session. Many programs use environment variables to set some
 # configuration.
@@ -47,21 +59,23 @@
 # store credentials in the environment (where only privileged users with access
 # to the computer running the program can access them), rather than storing them
 # in the source code (often shared across many computers and stored on external
-# servers like Github where it is easy to accidentally make them public).
+# servers like Github where it is easy to accidentally make them public);
+# although there are other more sophisticated ways used in many modern systems.
 
 # Some variables are automatically set by your terminal. Some important ones:
-#  `HOME` - your home directory. In OSX it is usually /Users/<computer user>.
+#  `HOME` - Your home directory. In OSX it is usually `/Users/<computer user>`.
 #           This is the directory that contains all the files specific to the
-#           current user (e.g. individual computer settings). You can reference
-#           the home directory by using `~`, e.g. `ls ~/Desktop` shows you what
-#           files are on your desktop.
-#           Run `echo $HOME` to see the value set.
+#           current user, like personal documents and individual settings. You
+#           can reference the home directory by using `~`, e.g. `ls ~/Desktop`
+#           shows you what files are on your desktop. Run `echo $HOME` to see
+#           the value set.
 #
 #  `PWD`  - Current directory. This is the file directory you are currently in.
 #           File paths that are not absolute paths (absolute paths start with a
-#           `/` e.g. `/Users/ericavonb/Desktop` is the absolute path) are
-#           relative to the current directory. So when in your home directory,
-#           running `ls` is the same as running `ls ~/` or `ls /Users/<user>`/
+#           `/`, like `/Users/ericavonb/Desktop`) are relative to the current
+#           directory. So when in your home directory, running `ls` is the same
+#           as running `ls ~/` or `ls /Users/<user>`/ (since `~` references the
+#           `HOME` directory).
 #
 #           The current directory can also be represented in file paths by `.`.
 #           When in your home directory, `ls ./Applications` is the same as
@@ -72,35 +86,31 @@
 
 
 
-# Bash loads this file before every session, so any variables you export will
-# be available in all terminal sessions.
-
-
-
 # ______________________________ Custom Prompt _______________________________ #
 
-# The first env var we are going to set is `PS1` to your prompt. The prompt is
+# The first env var we are going to set is `PS1` for your prompt. The prompt is
 # the text that starts new command lines in your terminal. It is "prompting" you
-# to enter a command to run.
+# to enter a command to run. It's kinda like the "Alexa" or "Ok, Google" before
+# giving a command, except it's printed for you automatically.
 
 
 # These are codes that change the color of the text in your terminal.
-# * You must use `echo -e`, not just `echo`, if you include a color.*
-#
+
+# *** Note ***
+# You must use `echo -e`, not just `echo`, if you include a color.
+
 # Example:
 #   $ echo -e "Roses are $REDred$RESET. Violets are $BLUEblue$RESET."
 
 
 # Reset colors back to default
-export RESET_COLORS="\033[m"
+export RESET_COLORS="\033[m" # only color
+export RESET="\033[0m" # color + style
+
+# Set style
+export BOLD="\033[1m"
 
 # available colors
-export RESET="\033[0m"
-export BOLD="\033[1m"
-export BLACK="\033[30m"
-export BOLD_BLACK="\033[1;30m"
-
-export BOLD="\033[1m"
 export BLACK="\033[30m"
 export BOLD_BLACK="\033[1;30m"
 export RED="\033[0;31m"
@@ -118,20 +128,21 @@ export BOLD_CYAN="\033[1;36m"
 export WHITE="\033[0;37m"
 export BOLD_WHITE="\033[1;37m"
 
+# *** NOTE ***
+#  We exported the colors so that they could be referenced on the command line
+# by other programs. We are NOT exporting these variables because we're only
+# using them in this file as a convenience and don't expect any other program
+# to know, or want to know, about them.
+
 # Replace these colors with colors of your choice from above
 DATETIME_COLOR=$BOLD_BLACK
 CURRENT_DIR_COLOR=$RED
 PROMPT_COLOR=$RED
 
-# *** NOTE ***
-#  We're exporting the colors so that they can be referenced on the
-# command line. We are NOT exporting these variables because we're only
-# using them in this file as a convenience.
-
 
 # Git is a commonly used version control system. It allows you to track changes
 # and different versions of your code. The `branch` is which version of the code
-# is currently represented in the directory you're in
+# is currently represented in the directory you're in.
 
 # Get the branch name for the current Git repo
 function find_git_branch {
@@ -141,6 +152,7 @@ function find_git_branch {
     echo -ne "$PS_GIT"
 }
 GIT_BRANCH_COLOR=$YELLOW
+
 
 # Main prompt format:
 # [HH:MM:SS AM(PM)] (<git branch>) <abbrev current working directory> $ <cursor>
