@@ -5,9 +5,17 @@
 #                                                                              #
 # ============================================================================ #
 
-# Your Bash Profile is a set of configurations for your bash terminal. This
-# file runs before every new session (e.g. if you open a new tab or window in
-# your terminal).
+# Bash stands for "Bourne-Again SHell". A shell is a way to talk more directly
+# to the operating system, in this case via a "command-line" interface. A
+# command-line interface is like a text-based Alexa: you issue a command from
+# the set of available commands and get back a response. Whereas you might say
+# `Alexa, Simon Says "Hello, World"` and hear back "Hello, World", in Bash
+# you would type `echo "Hello, World"` and see "Hello, World" printed out.
+#
+# Your Bash Profile is a set of configurations for your Bash terminal. This
+# file runs before every new session. A session in your terminal is similar to
+# a "session" in your web browser where you can sign in to a website, click a
+# link to another site, and when you go back not need to re-authenticate.
 #
 # To reload, such as after you update this file, run `source ~/.bash_profile`
 # in your terminal:
